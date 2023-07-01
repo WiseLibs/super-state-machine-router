@@ -1,12 +1,13 @@
 'use strict';
 const Router = require('./router');
 const Machine = require('./machine');
+const CSRMachine = require('./csr-machine');
 const generateStates = require('./generate-states');
 const parseRoute = require('./parse-route');
 
 /*
 	A simple builder class for constructing routers from any number of route
-	definitions.
+	definitions. The routes are assigned incrementing IDs, starting from 0.
  */
 
 module.exports = class RouterBuilder {
@@ -32,13 +33,15 @@ module.exports = class RouterBuilder {
 		return this;
 	}
 
-	build() {
+	build({ compress = false } = {}) {
 		const states = generateStates(this._routes);
-		const stateMachine = Machine.build(states, this._routes.length);
+		const machine = compress
+			? CSRMachine.build(states, this._routes.length)
+			: Machine.build(states, this._routes.length);
 
 		return new Router({
-			_stateMachine: stateMachine,
-			_stateCount: states.length,
+			_compressed: !!compress,
+			_machine: machine,
 			_routes: this._routes.map((route) => {
 				let variables = null;
 				if (route.segments.some(x => typeof x !== 'string')) {

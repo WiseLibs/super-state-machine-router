@@ -1,6 +1,6 @@
 'use strict';
 const Machine = require('./machine');
-const TypedArray = Object.getPrototypeOf(Uint8Array);
+const CSRMachine = require('./csr-machine');
 
 /*
 	A router for URL pathnames which uses a state machine to match routes in
@@ -13,19 +13,20 @@ const TypedArray = Object.getPrototypeOf(Uint8Array);
  */
 
 module.exports = class Router {
-	constructor({ _stateMachine, _stateCount, _routes }) {
-		if (!(_stateMachine instanceof TypedArray)) {
-			throw new TypeError('Expected _stateMachine to be a TypedArray');
+	constructor({ _compressed, _machine, _routes }) {
+		if (typeof _compressed !== 'boolean') {
+			throw new TypeError('Expected _compressed to be a boolean');
 		}
-		if (!Number.isInteger(_stateCount) || _stateCount < 1) {
-			throw new TypeError('Expected _stateCount to be a positive integer');
+		if (typeof _machine !== 'object' || _machine === null) {
+			throw new TypeError('Expected _machine to be an object');
 		}
 		if (!Array.isArray(_routes)) {
 			throw new TypeError('Expected _routes to be an array');
 		}
 
-		this._stateMachine = _stateMachine;
-		this._stateCount = _stateCount;
+
+		this._compressed = _compressed;
+		this._machine = _machine;
 		this._routes = _routes;
 	}
 
@@ -43,7 +44,11 @@ module.exports = class Router {
 		}
 
 		const charCodes = Buffer.from(pathname, 'ascii');
-		const route = this._routes[Machine.run(this._stateMachine, this._stateCount, charCodes)];
+		const route = this._routes[
+			this._compressed
+				? CSRMachine.run(this._machine, charCodes)
+				: Machine.run(this._machine, charCodes)
+		];
 		if (!route) {
 			return;
 		}

@@ -12,7 +12,7 @@ const ALPHABET = new Uint8Array(0x7e - 0x21 + 1)
 		- It has no ASCII code points below 0x21 or above 0x7e
 		- It may have percent-encodings which represent arbitrary unicode
 
-	The generated states are assigned incrementing ids, starting from 0.
+	The generated states are assigned incrementing IDs, starting from 0.
  */
 
 module.exports = (routes) => {

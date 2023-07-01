@@ -45,19 +45,23 @@ exports.build = (states, routeCount) => {
 		}
 	}
 
-	return stateMachine;
+	return {
+		stateMachine,
+		stateCount: states.length,
+	};
 };
 
 /*
-	This runs a state machine against an array of ASCII code points and returns
-	the id of the matching route. If the returned id is out of bounds, no match
-	was found.
+	This runs a state machine against an array of ASCII code points (integers)
+	and returns the ID of the matching route. If the returned ID is out of
+	bounds, no match was found. We assume the first input character is "/",
+	which is simply ignored.
  */
 
-exports.run = (stateMachine, stateCount, charCodes) => {
+exports.run = ({ stateMachine, stateCount }, input) => {
 	let state = 0;
-	for (let index = 1; index < charCodes.length; ++index) {
-		const slot = charCodes[index] + INPUT_OFFSET;
+	for (let index = 1; index < input.length; ++index) {
+		const slot = input[index] + INPUT_OFFSET;
 		state = stateMachine[state * STATE_SIZE + slot];
 		if (state >= stateCount) return 0x7fffffff;
 	}
