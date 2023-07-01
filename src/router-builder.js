@@ -15,7 +15,7 @@ module.exports = class RouterBuilder {
 		this._routes = [];
 	}
 
-	route(definition, value) {
+	add(definition, value) {
 		this._routes.push({
 			...parseRoute(definition),
 			id: this._routes.length,
@@ -24,7 +24,7 @@ module.exports = class RouterBuilder {
 		return this;
 	}
 
-	routeLiteral(definition, value) {
+	addLiteral(definition, value) {
 		this._routes.push({
 			...parseRoute(definition, true),
 			id: this._routes.length,

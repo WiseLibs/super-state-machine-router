@@ -1,6 +1,6 @@
 'use strict';
 const FORWARD_SLASH = 0x2f;
-const ALPHABET_SIZE = 0x7e - 0x21;
+const WILDCARD_ALPHABET_SIZE = 0x7e - 0x21;
 const WILDCARD = 0xff;
 
 /*
@@ -81,7 +81,7 @@ function pack(arg, maxValue) {
 }
 
 function allSameTransitions(transitions) {
-	if (transitions.length < ALPHABET_SIZE) {
+	if (transitions.length < WILDCARD_ALPHABET_SIZE) {
 		return null;
 	}
 	let count = 0;
@@ -94,7 +94,7 @@ function allSameTransitions(transitions) {
 			count += 1;
 		}
 	}
-	return count === ALPHABET_SIZE ? childState : null;
+	return count === WILDCARD_ALPHABET_SIZE ? childState : null;
 }
 
 function isSlashTransition(transition) {

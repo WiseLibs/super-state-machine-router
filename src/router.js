@@ -39,6 +39,9 @@ module.exports = class Router {
 		}
 
 		let { pathname } = url;
+		if (!pathname.startsWith('/')) {
+			return; // It's an opaque path, such in "mailto:foo@bar.com"
+		}
 		if (pathname.includes('%')) {
 			pathname = normalizePathname(pathname);
 		}
