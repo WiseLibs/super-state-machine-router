@@ -111,7 +111,8 @@ function isNotSlashTransition(transition) {
 	ID is out of bounds, no match was found. We assume the first input character
 	is "/", which is simply ignored. This algorithm is necessarily less
 	efficient than a regular/uncompressed state machine, but technically still
-	runs in O(n) time, since the size of the input alphabet is constant.
+	runs in O(n) time, since the size of the input alphabet is constant. However
+	in practice, CSR state machines run faster due to the effect of CPU caches.
  */
 
 exports.run = ({ rowOffsets, keys, values, matches }, input) => {
