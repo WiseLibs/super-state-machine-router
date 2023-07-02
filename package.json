@@ -12,10 +12,15 @@
   "main": "src/index.js",
   "types": "src/types.d.ts",
   "scripts": {
-    "test": "mocha --slow=100 --timeout=5000"
+    "test": "mocha --slow=100 --timeout=5000",
+    "benchmark": "node benchmark"
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "mocha": "^10.2.0"
-  }
+    "mocha": "^10.2.0",
+    "nodemark": "^0.3.0"
+  },
+  "files": [
+    "src/**"
+  ]
 }

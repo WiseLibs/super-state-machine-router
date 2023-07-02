@@ -33,7 +33,7 @@ module.exports = class RouterBuilder {
 		return this;
 	}
 
-	build({ compress = false } = {}) {
+	build({ compress = true } = {}) {
 		const states = generateStates(this._routes);
 		const machine = compress
 			? CSRMachine.build(states, this._routes.length)
