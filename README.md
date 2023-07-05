@@ -74,7 +74,7 @@ This is the same as `builder.add()`, except all special characters within the ro
 
 ### builder.build() -> *Router*
 
-Constructs and returns a [router](#class-router), based on the routes that have been added to the builder thus far. If there are multiple routes which could be matched by the same URL pathname, the ambiguity is detected and an error is thrown.
+Constructs and returns a [router](#class-router) based on the routes that have been added to the builder thus far. If there are multiple routes which could be matched by the same URL pathname, the ambiguity is detected and an error is thrown.
 
 ## class Router
 
