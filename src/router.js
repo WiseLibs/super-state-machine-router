@@ -2,6 +2,8 @@
 const Machine = require('./machine');
 const CSRMachine = require('./csr-machine');
 
+const ENCODED_CHAR = /[^a-zA-Z0-9/_.!~*'()-]/;
+
 /*
 	A router for URL pathnames which uses a state machine to match routes in
 	O(n) time, while also supporting "wildcard" segments with user-defined
@@ -42,7 +44,7 @@ module.exports = class Router {
 		if (!pathname.startsWith('/')) {
 			return; // It's an opaque path, such in "mailto:foo@bar.com"
 		}
-		if (pathname.includes('%')) {
+		if (ENCODED_CHAR.test(pathname)) {
 			pathname = normalizePathname(pathname);
 		}
 
@@ -70,15 +72,21 @@ function normalizePathname(pathname) {
 }
 
 function resolveVariables(pathname, variables, output) {
+	if (pathname === '/') {
+		// In this case, we know there is only one variable, and it must have
+		// the "*" quantifier. We have to handle this case specially because we
+		// want to represent the "/" pathname as an empty array (i.e., there are
+		// no segments), instead of representing it as a single segment with a
+		// value of "" (empty string).
+		output[variables[0].name] = [];
+		return;
+	}
 	const segments = pathname.split('/');
-	for (let i = 0; i < variables.length; ++i) {
-		const variable = variables[i];
-		if (variable) {
-			if (variable.quantifier) {
-				output[variable.name] = segments.slice(i + 1).map(decodeURIComponent);
-			} else {
-				output[variable.name] = decodeURIComponent(segments[i + 1] || '');
-			}
+	for (const variable of variables) {
+		if (variable.quantifier) {
+			output[variable.name] = segments.slice(variable.index).map(decodeURIComponent);
+		} else {
+			output[variable.name] = decodeURIComponent(segments[variable.index] || '');
 		}
 	}
 }

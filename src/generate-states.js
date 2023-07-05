@@ -19,15 +19,16 @@ module.exports = (routes) => {
 	const items = new Map();
 	const states = new Map();
 
-	stateOf(new Set(routes.map(route => itemOf(route, 0, 0))));
+	stateOf(new Set(routes.map(route => itemOf(route, 0, 0, true))));
 
 	return [...states.values()];
 
-	function itemOf(route, segment, index) {
-		const itemKey = `${route.id},${segment},${index}`;
+	function itemOf(route, segment, index, isInitial = false) {
+		const isOptional = isInitial && route.segments[0]?.quantifier === '*';
+		const itemKey = `${route.id},${segment},${index}${isOptional ? '?' : ''}`;
 		let item = items.get(itemKey);
 		if (item) return item;
-		item = { route, segment, index, key: itemKey };
+		item = { route, segment, index, isOptional, key: itemKey };
 		items.set(itemKey, item);
 		return item;
 	}
@@ -74,6 +75,9 @@ module.exports = (routes) => {
 					const childItem = itemOf(route, item.segment, 1);
 					for (const charCode of ALPHABET) {
 						transition(charCode, childItem);
+					}
+					if (item.isOptional) {
+						matches.add(route);
 					}
 				} else {
 					for (const charCode of ALPHABET) {

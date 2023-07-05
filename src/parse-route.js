@@ -40,6 +40,7 @@ module.exports = (definition, isLiteral = false) => {
 	}
 
 	const segments = [];
+	const variableNames = new Set();
 	SEGMENT.lastIndex = 1;
 
 	let match;
@@ -65,8 +66,21 @@ module.exports = (definition, isLiteral = false) => {
 			if (tail !== '' && tail !== '*' && tail !== '+') {
 				throw failure(`Route contains illegal token "${tail}"`, definition, match.index + index + 1);
 			}
+			if (index + tail.length + 1 !== segment.length) {
+				const suffixIndex = index + tail.length + 1;
+				const suffix = segment.charAt(suffixIndex);
+				throw failure(`Route contains illegal token "${suffix}"`, definition, match.index + suffixIndex);
+			}
+			if (tail && match.index + segment.length < definition.length) {
+				throw failure(`Route variables can only use "${tail}" in the last segment`, definition, match.index + index + 1);
+			}
+			const variableName = segment.slice(1, -1 - tail.length);
+			if (variableNames.has(variableName)) {
+				throw failure(`Route contains duplicate variable '${variableName}'`, definition, match.index + 1);
+			}
+			variableNames.add(variableName);
 			segments.push({
-				name: segment.slice(1, -1 - tail.length),
+				name: variableName,
 				quantifier: tail,
 			});
 		}

@@ -1,4 +1,5 @@
 'use strict';
+const ENCODED_CHAR = /[^a-zA-Z0-9/_.!~*'()-]/;
 
 module.exports = (routes) => {
 	const regexes = new Array(routes.length);
@@ -19,7 +20,7 @@ module.exports = (routes) => {
 		if (!pathname.startsWith('/')) {
 			return; // It's an opaque path, such in "mailto:foo@bar.com"
 		}
-		if (pathname.includes('%')) {
+		if (ENCODED_CHAR.test(pathname)) {
 			pathname = normalizePathname(pathname);
 		}
 

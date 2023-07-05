@@ -6,6 +6,6 @@ module.exports = (routes) => {
 	for (const route of routes) {
 		builder.add(route, route);
 	}
-	const router = builder.build({ compress: false });
+	const router = builder.build({ compress: true });
 	return router.route.bind(router);
 };

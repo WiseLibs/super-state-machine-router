@@ -45,7 +45,9 @@ module.exports = class RouterBuilder {
 			_routes: this._routes.map((route) => {
 				let variables = null;
 				if (route.segments.some(x => typeof x !== 'string')) {
-					variables = route.segments.map(x => typeof x === 'string' ? null : x);
+					variables = route.segments
+						.map((x, i) => typeof x === 'string' ? null : { ...x, index: i + 1 })
+						.filter(x => x);
 				}
 				return {
 					value: route.value,
