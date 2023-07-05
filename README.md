@@ -42,7 +42,7 @@ assert(noMatch === undefined);
 
 ## class RouterBuilder
 
-A builder class that lets you build routers. You add routes to a builder by calling `.add()` and, when you're done adding routes, you can build the actual router with `.build()`.
+RouterBuilder lets you build routers. You add routes to a builder by calling `.add()` and, when you're done adding routes, you can build the actual router with `.build()`.
 
 ### builder.add(*routeDefinition*, *value*) -> *this*
 
