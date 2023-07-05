@@ -1,12 +1,12 @@
 {
-  "name": "super-router",
+  "name": "super-state-machine-router",
   "version": "1.0.0",
   "description": "An O(n) URL router with wildcard support",
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
-  "homepage": "http://github.com/WiseLibs/super-router",
+  "homepage": "http://github.com/WiseLibs/super-state-machine-router",
   "repository": {
     "type": "git",
-    "url": "git://github.com/WiseLibs/super-router.git"
+    "url": "git://github.com/WiseLibs/super-state-machine-router.git"
   },
   "license": "MIT",
   "main": "src/index.js",

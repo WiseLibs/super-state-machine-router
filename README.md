@@ -1,4 +1,4 @@
-# super-router [![test](https://github.com/WiseLibs/super-router/actions/workflows/test.yml/badge.svg)](https://github.com/WiseLibs/super-router/actions/workflows/test.yml)
+# super-state-machine-router [![test](https://github.com/WiseLibs/super-state-machine-router/actions/workflows/test.yml/badge.svg)](https://github.com/WiseLibs/super-state-machine-router/actions/workflows/test.yml)
 
 An efficient URL router with the following features:
 
@@ -12,7 +12,7 @@ An efficient URL router with the following features:
 ## Installation
 
 ```
-npm install super-router
+npm install super-state-machine-router
 ```
 
 > Requires Node.js v14.x.x or later.
@@ -20,7 +20,7 @@ npm install super-router
 ## Usage
 
 ```js
-const { RouterBuilder } = require('super-router');
+const { RouterBuilder } = require('super-state-machine-router');
 
 const router = new RouterBuilder()
 	.add('/', myIndexPath)
@@ -100,4 +100,4 @@ assert(variables.second === 'bar');
 
 ## License
 
-[MIT](https://github.com/WiseLibs/super-router/blob/master/LICENSE)
+[MIT](https://github.com/WiseLibs/super-state-machine-router/blob/master/LICENSE)
