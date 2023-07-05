@@ -84,11 +84,11 @@ You cannot construct this class directly (you have to use the [RouterBuilder](#c
 
 ### router.route(*url*, [*outVariables*]) -> *value* or *undefined*
 
-Attempts to match the given url (a string or [URL](https://nodejs.org/api/url.html#class-url) object) with a route. If a matching route is found, it returns the value that was originally associated with the route (when `.add()` was called on the [RouterBuilder](#class-routerbuilder)). If no matching route is found, it returns `undefined`.
+Attempts to match the given url (a string or [URL](https://nodejs.org/api/url.html#class-url) object) with a route. If a matching route is found, it returns the value that was originally associated with the route. If no matching route is found, it returns `undefined`.
 
 [Percent-encodings](https://en.wikipedia.org/wiki/URL_encoding) are understood and interpretted correctly.
 
-If you pass an object as the second parameter, the values of any variables within the matching route definition will be assigned to the object that you provide.
+If you pass an object as the second parameter, the values of any variables within the matching route will be assigned to the object that you provide.
 
 ```js
 const router = new RouterBuilder().add('/{first}/{second}', 123).build();
