@@ -58,9 +58,12 @@ builder.add('/article/{id}/comments/{commentId}', someValue);
 
 If the *last* segment is a variable, it may be followed by `+` or `*`, which allows it to match any number of additional segments afterwards. A variable with `+` must match at least one segment, but a variable with `*` can match zero segments.
 
-```
-builder.add('/api/{endpoint}+', someValue); // Matches "/api/foo" and "/api/foo/bar", but not "/api"
-builder.add('/redirect/{newPath}*', someValue); // Matches "/redirect/foo/bar" and "/redirect"
+```js
+// Matches "/api/foo" and "/api/foo/bar", but not "/api"
+builder.add('/api/{endpoint}+', someValue);
+
+// Matches "/redirect/foo/bar" and "/redirect"
+builder.add('/redirect/{newPath}*', someValue);
 ```
 
 > Note that variables cannot be combined with literal characters in the same segment; either a segment is a variable, or it is a literal string.
