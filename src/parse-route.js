@@ -62,6 +62,9 @@ module.exports = (definition, isLiteral = false) => {
 			if (index < 0) {
 				throw failure('Route variable is missing a matching "}"', definition, match.index);
 			}
+			if (index <= 1) {
+				throw failure('Route variable has no name', definition, match.index);
+			}
 			const tail = segment.charAt(index + 1);
 			if (tail !== '' && tail !== '*' && tail !== '+') {
 				throw failure(`Route contains illegal token "${tail}"`, definition, match.index + index + 1);

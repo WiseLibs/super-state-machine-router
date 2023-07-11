@@ -54,6 +54,10 @@ describe('RouterBuilder', function () {
 			expect(() => builder.add('/foo/bar{baz}qux')).to.throw(Error).with.keys(['source', 'offset']);
 			expect(() => builder.add('/foo/bar{')).to.throw(Error).with.keys(['source', 'offset']);
 		});
+		it('throws if the definition has a variable with an empty name', function () {
+			const builder = new RouterBuilder();
+			expect(() => builder.add('/{}')).to.throw(Error).with.keys(['source', 'offset']);
+		});
 		it('throws if the definition has a variable with an invalid tail', function () {
 			const builder = new RouterBuilder();
 			expect(() => builder.add('/{foo}?')).to.throw(Error).with.keys(['source', 'offset']);
