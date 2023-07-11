@@ -62,6 +62,32 @@ module.exports = class Router {
 		}
 		return route.value;
 	}
+
+	map(callback) {
+		if (typeof callback !== 'function') {
+			throw new TypeError('Expected callback to be a function');
+		}
+
+		const oldRoutes = this._routes;
+		const newRoutes = new Array(oldRoutes.length);
+		for (let i = 0; i < oldRoutes.length; ++i) {
+			const oldRoute = oldRoutes[i];
+			const value = callback(oldRoute.value);
+			newRoutes[i] = { value, variables: oldRoute.variables };
+		}
+
+		return new Router({
+			_compressed: this._compressed,
+			_machine: this._machine,
+			_routes: newRoutes,
+		});
+	}
+
+	*[Symbol.iterator]() {
+		for (const route of this._routes) {
+			yield route.value;
+		}
+	}
 };
 
 function normalizePathname(pathname) {

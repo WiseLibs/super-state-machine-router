@@ -101,6 +101,26 @@ assert(variables.first === 'foo');
 assert(variables.second === 'bar');
 ```
 
+### router.map(*callback*) -> *Router*
+
+Creates a new router that is equivalent to this one except that each route's associated value is mapped through the given callback function.
+
+Using this method is more efficient than building multiple separate routers because the underlying state machine (which may be quite large) will be shared among the routers created by this method.
+
+```js
+const newRouter = oldRouter.map(value => value.id);
+```
+
+### Iterable protocol
+
+Routers are [iterables](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols), which means you can iterate over them using a `for-of` loop to get each route's associated value (i.e., the values that may be returned by `router.route()`).
+
+```js
+for (const value of router) {
+    console.log(value);
+}
+```
+
 ## License
 
 [MIT](https://github.com/WiseLibs/super-state-machine-router/blob/master/LICENSE)
